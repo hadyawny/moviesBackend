@@ -21,11 +21,14 @@ const updateUserVal = Joi.object({
 
 const addToFavVal = Joi.object({
 
-  movieId: Joi.number().integer().positive().required()
+  movieId: Joi.number().integer().positive().required(),
+  userId: Joi.string().required(),
 });
 const removeFromFavVal = Joi.object({
 
-  movieId: Joi.number().integer().positive().required()
+  movieId: Joi.number().integer().positive().required(),
+  userId: Joi.string().required(),
+
 });
 
 export { addUserVal, paramsIdVal, updateUserVal , addToFavVal ,removeFromFavVal };

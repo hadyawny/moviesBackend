@@ -28,12 +28,12 @@ const deleteUser = catchError(async (req, res,next) => {
   });
 
   const addToFav = catchError(async (req, res, next) => {
-    const { movieId } = req.body;
+    const { movieId ,userId} = req.body;
     if (!movieId) {
       return res.status(400).json({ message: "Movie ID is required" });
     }
   
-    let user = await userModel.findById(req.user._id);
+    let user = await userModel.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -49,12 +49,12 @@ const deleteUser = catchError(async (req, res,next) => {
 
 
   const removeFromFav = catchError(async (req, res, next) => {
-    const { movieId } = req.body;
+    const { movieId ,userId} = req.body;
     if (!movieId) {
       return res.status(400).json({ message: "Movie ID is required" });
     }
   
-    let user = await userModel.findById(req.user._id);
+    let user = await userModel.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

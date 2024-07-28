@@ -17,9 +17,9 @@ userRouter.route("/:id")
 .get(validation(paramsIdVal),getSingleUser)
 
 userRouter.route("/addToFav")
-.put(protectedRoutes,validation(addToFavVal),addToFav)
+.put(validation(addToFavVal),addToFav)
 
 userRouter.route("/removeFromFav")
-.put(protectedRoutes,validation(removeFromFavVal),removeFromFav)
+.put(validation(removeFromFavVal),removeFromFav)
 
 export default userRouter;
