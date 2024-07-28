@@ -4,7 +4,7 @@ const addUserVal = Joi.object({
   userName: Joi.string().min(2).max(20).required(),
   email: Joi.string().email().required(),
   password: Joi.string()
-    .pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/)
+    .pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/).message('Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character')
     .required(),
   rePassword: Joi.valid(Joi.ref("password")).required(),
 });
