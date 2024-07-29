@@ -21,13 +21,13 @@ const updateUserVal = Joi.object({
 
 const addToFavVal = Joi.object({
 
-  movieId: Joi.number().integer().positive().required(),
-  userId: Joi.string().required(),
+  movieId: Joi.string().min(2).max(100).required(),
+  userId: Joi.string().min(2).max(100).required(),
 });
 const removeFromFavVal = Joi.object({
 
-  movieId: Joi.string().min(2).max(20).required(),
-  userId: Joi.string().min(2).max(20).required(),
+  movieId: Joi.string().min(2).max(100).required(),
+  userId: Joi.string().min(2).max(100).required(),
 
 });
 
