@@ -26,8 +26,8 @@ const addToFavVal = Joi.object({
 });
 const removeFromFavVal = Joi.object({
 
-  movieId: Joi.number().integer().positive().required(),
-  userId: Joi.string().required(),
+  movieId: Joi.string().min(2).max(20).required(),
+  userId: Joi.string().min(2).max(20).required(),
 
 });
 
