@@ -35,13 +35,13 @@ const schema = new mongoose.Schema(
   { timestamps: true }
 );
 
-schema.pre("save", function () {
-  this.password = bcrypt.hashSync(this.password, 8);
-});
+// schema.pre("save", function () {
+//   this.password = bcrypt.hashSync(this.password, 8);
+// });
 
 schema.pre("findOneAndUpdate", function () {
   if (this._update.password)
-    this._update.password = bcrypt.hashSync(this._update.password, 8);
+    this._update.password = req.body.password, bcrypt.genSaltSync(10);
 });
 
 export const userModel = mongoose.model("user", schema);

@@ -8,6 +8,9 @@ import otpGenerator from "otp-generator";
 
 
 const signup = catchError(async (req, res, next) => {
+  req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+  req.body.email = req.body.email.toLowerCase();
+
   let user = new userModel(req.body);
   await user.save();
 
@@ -27,16 +30,21 @@ const signup = catchError(async (req, res, next) => {
 });
 
 const signin = catchError(async (req, res, next) => {
-  let user = await userModel.findOne({ email: req.body.email });
-  if (user && bcrypt.compareSync(req.body.password, user.password)) {
-    let token = jwt.sign(
-      { userId: user._id, role: user.role },
-      process.env.JWT_KEY
-    );
-    return res.json({ message: "success", token ,user_id: user._id});
+  let user = await userModel.findOne({ email: req.body.email.toLowerCase() });
+  if (!user) {
+    return next(new AppError("Email not found", 404));
+  }
+  
+  const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
+  if (!isPasswordCorrect) {
+    return next(new AppError("Incorrect password", 401));
   }
 
-  next(new AppError("incorrect email or password", 401));
+  let token = jwt.sign(
+    { userId: user._id, role: user.role },
+    process.env.JWT_KEY
+  );
+  res.json({ message: "success", token, user_id: user._id });
 });
 
 const changePassword = catchError(async (req, res, next) => {
